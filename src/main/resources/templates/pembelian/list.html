@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Riwayat Pembelian</title>
+    <link rel="icon" th:href="@{/img/bg.png}" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #print-area, #print-area * {
+                visibility: visible;
+            }
+            #print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 🔹 Navbar (tidak dicetak) -->
+<nav class="navbar navbar-expand-lg bg-light border-bottom mb-3">
+  <div class="container-fluid">
+    <img th:src="@{/img/bg.png}" alt="Logo Apotek" width="100">
+    <a class="navbar-brand" href="/obat"><img src="../obat/bg.png" alt=""></a>
+    <div class="d-flex">
+      <a class="btn btn-outline-primary me-2" href="/obat">Data Obat</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-3">
+    <h2>Riwayat Transaksi</h2>
+    <button class="btn btn-secondary mb-3" onclick="printTable()">🖨 Cetak</button>
+
+    <!-- 🔸 Area yang akan dicetak -->
+    <div id="print-area">
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>Obat</th>
+                    <th>Jumlah</th>
+                    <th>Tanggal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${pembelianList}">
+                    <td th:text="${p.namaObat}">Paracetamol</td>
+                    <td th:text="${p.jumlah}">2</td>
+                    <td th:text="${#temporals.format(p.tanggal, 'dd/MM/yyyy HH:mm')}">01/01/2025 12:00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function printTable() {
+  window.print();
+}
+</script>
+
+</body>
+</html>
